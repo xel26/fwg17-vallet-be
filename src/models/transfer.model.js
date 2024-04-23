@@ -75,3 +75,19 @@ exports.delete = async (id) => {
   const {rows} = await db.query(sql, values)
   return rows[0]
 }
+
+
+exports.insertContactList = async (userId, contactId)=>{
+  const sql = `INSERT INTO "contactList" ("userId", "contactId") VALUES ($1, $2) RETURNING *`
+  const values = [userId, contactId]
+  const {rows} = await db.query(sql,values)
+  return rows[0]
+}
+
+
+exports.findContactList = async (userId, contactId)=>{
+  const sql = `select * from "contactList" where "userId" = $1 and "contactId" = $2`
+  const values = [userId, contactId]
+  const {rows} = await db.query(sql,values)
+  return rows[0]
+}

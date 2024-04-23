@@ -2,7 +2,7 @@ const db = require("../lib/db.lib")
 
 exports.insert = async(data) => {
     const sql = `
-    INSERT INTO "forgotPassword" ("otp", "email", "userId") VALUES ($1, $2, $3)
+    INSERT INTO "otp" ("otp", "email", "userId") VALUES ($1, $2, $3)
     RETURNING *
     `
     const values = [data.otp, data.email, data.userId]
@@ -13,7 +13,7 @@ exports.insert = async(data) => {
 
 exports.findOnebyOtp = async (otp) => {
     const sql = `
-    SELECT * FROM "forgotPassword" WHERE "otp" = $1
+    SELECT * FROM "otp" WHERE "otp" = $1
     `
     const values = [otp]
     const {rows} = await db.query(sql, values)
@@ -24,7 +24,7 @@ exports.findOnebyOtp = async (otp) => {
 
 exports.delete = async (id) => {
     const sql = `
-    DELETE FROM "forgotPassword" WHERE id = $1
+    DELETE FROM "otp" WHERE id = $1
     RETURNING *
     `
     const values = [id]

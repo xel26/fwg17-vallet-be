@@ -60,15 +60,9 @@ exports.findOneByEmail = async (email)=>{
   where "email" = $1`
   const values = [email]
   const {rows} = await db.query(sql,values)
-  return rows[0]
-}
-
-exports.findOneByPhoneNumber = async (phoneNumber)=>{
-  const sql = `select "id" as "userId", "fullName", "phoneNumber", "picture"
-  from "users"
-  where "phoneNumber" = $1`
-  const values = [phoneNumber]
-  const {rows} = await db.query(sql,values)
+  if(!rows.length){
+    throw new Error("email not registered")
+  }
   return rows[0]
 }
 
@@ -80,7 +74,6 @@ exports.insert = async (colName, colValues)=>{
   for(let i = 0; i < colName.length; i++){
     col.push(colName[i])
     values.push(colValues[i])
-
     dollar.push(`$${values.length}`)
   }
 

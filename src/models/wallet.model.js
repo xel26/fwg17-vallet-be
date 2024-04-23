@@ -70,9 +70,8 @@ exports.update = async (id, data) => {
 }
 
 
-exports.updateByUserId = async (id, data) => {
-  const values = [id, data]
-
+exports.updateByUserId = async (id, balance) => {
+  
   const sql = 
   `
   UPDATE "wallet"
@@ -80,8 +79,9 @@ exports.updateByUserId = async (id, data) => {
   WHERE "userId"=$1
   RETURNING *
   `
-
+  const values = [id, balance]
   const {rows} = await db.query(sql, values)
+  console.log(rows)
   return rows[0]
 }
 

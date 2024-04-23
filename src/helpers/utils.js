@@ -1,4 +1,5 @@
 exports.outError = (err, response) => {
+    console.log(err)
     if (err.code === "ECONNREFUSED") {
         return response.status(500).json({
             success: false,
@@ -42,13 +43,10 @@ exports.outError = (err, response) => {
             success: false,
             message: err.message
         })
-    } else {
-        console.log(err)
-        return response.status(500).json({
+    } else{
+        return response.status(404).json({
             success: false,
-            message: 'Internal Server Error!', 
-            message2: err.message,
-            results: err
+            message: err.message ? err.message : err
         })
     }
 }

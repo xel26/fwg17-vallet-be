@@ -8,26 +8,34 @@ exports.createTransfer = async (req, res) => {
     await db.query('BEGIN')
     //insert table transfer
     const transfer = await transferModel.insert(req.body)
+    console.log(transfer)
+
 
     // take out balance from sender
     const findWalletSender = await walletModel.findOneByUserId(transfer.senderId)
 
     if(transfer.amount > findWalletSender.balance){
+      // await db.query('ROLLBACK')
       throw ({code: 'THROW', message: 'balance is not sufficient'})
     }
     
     const totalSender = findWalletSender.balance - transfer.amount
 
-    const senderWallet = await walletModel.updateByUserId(transfer.senderId, totalSender)
+    await walletModel.updateByUserId(transfer.senderId, totalSender)
 
     //add balance to recipient
-    const findWalletRecipient = await walletModel.findOneByUserId(transfer.recipientId)
+    const findWalletRecipient = await walletModel.findOneByUserId(transfer.senderId)
 
     const totalRecipient = transfer.amount + findWalletRecipient.balance
 
-    const recipientwallet = await walletModel.updateByUserId(transfer.recipientId, totalRecipient)
+    await walletModel.updateByUserId(transfer.recipientId, totalRecipient)
 
     
+    //add data to contactList
+    const isExist = transferModel.findContactList(transfer.senderId, transfer.recipientId)
+    if(!isExist.length){
+      await transferModel.insertContactList(transfer.senderId, transfer.recipientId)
+    }
     
     
     if(!req.body.amount){
