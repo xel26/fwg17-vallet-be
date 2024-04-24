@@ -106,6 +106,7 @@ exports.updateProfile = async (req, res) => {
 
 
     if(req.body.picture == 'null'){
+      console.log('delete picture')
       req.body.picture = null
 
       // if(checkUsersData.picture){
@@ -114,14 +115,6 @@ exports.updateProfile = async (req, res) => {
       //   fs.access(savedPicture, fs.constants.R_OK).then(() => {
       //     fs.rm(savedPicture)
       //   }).catch(()=>{})
-      
-    if(req.body.pin){
-      req.body.pin = await argon.hash(req.body.pin)
-    }
-
-      // if(req.body.password) {
-      //   req.body.password = await argon.hash(req.body.password)
-      // }
 
 
       cloudinary.search
@@ -141,6 +134,7 @@ exports.updateProfile = async (req, res) => {
 
     
     if(req.file){
+      console.log('update picture')
       // if(checkUsersData.picture){
       //   const savedPicture = path.join(global.path, 'uploads', 'profiles', checkUsersData.picture)
       //   fs.access(savedPicture, fs.constants.R_OK).then(() => {
