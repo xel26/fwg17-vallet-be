@@ -40,7 +40,6 @@ exports.getProfile = async (req, res) => {
 //         throw err
 //       }
 
-<<<<<<< HEAD
 //       const {id} = req.user
 //       console.log(id)
 
@@ -115,7 +114,6 @@ exports.updateProfile = async (req, res) => {
       //   fs.access(savedPicture, fs.constants.R_OK).then(() => {
       //     fs.rm(savedPicture)
       //   }).catch(()=>{})
-=======
       
     if(req.body.pin){
       req.body.pin = await argon.hash(req.body.pin)
@@ -123,7 +121,6 @@ exports.updateProfile = async (req, res) => {
 
       // if(req.body.password) {
       //   req.body.password = await argon.hash(req.body.password)
->>>>>>> 7fcb0f74e4fbbd03875d39e78d700206b492edfa
       // }
 
 

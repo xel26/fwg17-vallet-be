@@ -22,8 +22,7 @@ exports.findAll = async (sortBy='id', order, page=1)=>{
   FROM "contactList"
   LIMIT ${limit} OFFSET ${offset}
   `
-  const values = []
-  const {rows} = await db.query(sql,values)
+  const {rows} = await db.query(sql)
   return rows
 }
 
@@ -86,8 +85,8 @@ exports.countAll = async ()=>{
   const sql = `SELECT count(id) AS counts 
   FROM "contactList"
   `
-  const values = []
-  const {rows} = await db.query(sql,values)
+  const {rows} = await db.query(sql)
+  console.log(rows)
   return rows[0].counts
 }
 
@@ -105,7 +104,7 @@ exports.allContactListforCustomer = async(id, search, limit, offset, page) => {
   return rows
 }
 
-<<<<<<< HEAD
+
 
 exports.findByPhoneNumber = async (phoneNumber, limit, offset)=>{
   const sql = `
@@ -133,7 +132,7 @@ exports.countAllByPhoneNumber = async (phoneNumber)=>{
   console.log(rows)
   return rows[0].count
 }
-=======
+
 exports.findOneTransferDetail = async (id)=>{
   const sql = `SELECT "fullName", "phoneNumber", "isVerified", "id", "picture"
   FROM "users" WHERE "id" = $1`
@@ -141,4 +140,3 @@ exports.findOneTransferDetail = async (id)=>{
   const {rows} = await db.query(sql,values)
   return rows[0]
 }
->>>>>>> 7fcb0f74e4fbbd03875d39e78d700206b492edfa

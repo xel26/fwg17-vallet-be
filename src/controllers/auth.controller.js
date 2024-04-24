@@ -316,3 +316,18 @@ exports.findUserByEmail = async (req, res) => {
     handleErr.outError(error, res)
   }
 }
+
+
+exports.findUserByPhone = async (req, res) => {
+  try {
+    const user = await usersModel.findOneByPhone(req.query.phoneNumber)
+
+    return res.json({
+      success: true,
+      message: `Detail users`,
+      results: user
+    })
+  } catch (error) {
+    handleErr.outError(error, res)
+  }
+}

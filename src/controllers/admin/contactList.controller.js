@@ -4,7 +4,6 @@ const handleErr = require('../../helpers/utils')
 
 exports.getAll = async (req, res) => {
   const {
-    // search,
     sortBy,
     order
   } = req.query
@@ -18,10 +17,8 @@ exports.getAll = async (req, res) => {
   try {
     const count = await contactListModel.countAll()
     const contactList = await contactListModel.findAll(sortBy, order, page)
-
-    // console.log(contactList.results)
-
-    if(contactList){
+    
+    if(!contactList){
       throw ({code: 'THROW', message: 'data not found'})
     }
 

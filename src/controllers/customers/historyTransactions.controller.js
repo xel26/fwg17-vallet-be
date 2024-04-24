@@ -8,16 +8,16 @@ const handleErr = require("../../helpers/utils")
 exports.getAllData = async(req, res) => {
     try{
         const {id} = req.user
-        const { filter = '', page = 1, limits = 5 } = req.query
+        const { filter = '', page = 1, limits = 5} = req.query
         const countData = await historyTransactionsModel.countData(id, filter)
         if(countData == 0){
-            throw ({code: "THROW", message: "No Data!"})
+            throw ({code: "THROW", message: "No Data Found!"})
         }
 
         const getContactList = await historyTransactionsModel.allHistoryTransactions(id, filter, page, limits)
         
         if(getContactList.length < 1){
-            throw ({code: "THROW", message: "No Data!"})
+            throw ({code: "THROW", message: "No Data Found!"})
         }
 
         const totalPage = Math.ceil(countData / limits)

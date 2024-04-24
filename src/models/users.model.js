@@ -66,6 +66,19 @@ exports.findOneByEmail = async (email)=>{
   return rows[0]
 }
 
+exports.findOneByPhone = async (phoneNumber)=>{
+  const sql = `select "users"."id" as "userId", "email", "password", "roleId", "name" as "roleName"
+  from "users"
+  join "roles" "r" on "users"."roleId" = "r"."id"
+  where "phoneNumber" = $1`
+  const values = [phoneNumber]
+  const {rows} = await db.query(sql,values)
+  if(!rows.length){
+    throw new Error("phone number is already exist")
+  }
+  return rows[0]
+}
+
 exports.insert = async (colName, colValues)=>{
   const col = []
   const values = []

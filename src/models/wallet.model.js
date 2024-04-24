@@ -96,3 +96,24 @@ exports.delete = async (id) => {
   const {rows} = await db.query(sql, values)
   return rows[0]
 }
+
+
+exports.GetIncome = async (recipientId) => {
+  sql = `
+  select sum("amount") as "income" from "transfer" where "recipientId" = $1
+   `
+  const values = [recipientId]
+  const {rows} = await db.query(sql, values)
+  console.log(rows[0].income)
+  return rows[0].income
+}
+
+
+exports.GetExpense = async (senderId) => {
+  sql = `
+  select sum("amount") as "expense" from "transfer" where "senderId" = $1
+   `
+  const values = [senderId]
+  const {rows} = await db.query(sql, values)
+  return rows[0].expense
+}

@@ -19,3 +19,41 @@ exports.getDetailWallet = async (req, res) => {
     errorHandler.outError(err,res)
   }
 }
+
+
+exports.GetIncome = async (req, res) => {
+  const {id: recipientId} = req.user
+
+  try {
+      const income = await walletModel.GetIncome(recipientId)
+
+      return res.json({
+          success: true,
+          message: 'income',
+          results: income
+      })
+      
+  } catch (error) {
+    errorHandler.outError(error, res)
+  }
+}
+
+
+exports.GetExpense = async (req, res) => {
+  const {id: senderId} = req.user
+  console.log(senderId)
+
+  try {
+      const expense = await walletModel.GetExpense(senderId)
+      console.log(expense)
+
+      return res.json({
+          success: true,
+          message: 'income',
+          results: expense
+      })
+      
+  } catch (error) {
+    errorHandler.outError(error, res)
+  }
+}
